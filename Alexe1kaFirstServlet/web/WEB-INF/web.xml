@@ -21,4 +21,13 @@
         <servlet-name>DateTimeServlet</servlet-name>
         <url-pattern>/time</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MailServlet</servlet-name>
+        <servlet-class>MailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MailServlet</servlet-name>
+        <url-pattern>/MailServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
