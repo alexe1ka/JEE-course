@@ -17,7 +17,7 @@ public class MyServlet extends HttpServlet {
         req.setAttribute("subscribed", true);
 
 
-        //TODO non null check login
+
         PrintWriter printWriter = response.getWriter();
         String docType = "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
 
