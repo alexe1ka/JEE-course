@@ -12,7 +12,7 @@
         <servlet-name>MyServlet</servlet-name>
         <url-pattern>/MyServlet</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>DateTimeServlet</servlet-name>
         <servlet-class>DateTimeServlet</servlet-class>
@@ -21,7 +21,4 @@
         <servlet-name>DateTimeServlet</servlet-name>
         <url-pattern>/time</url-pattern>
     </servlet-mapping>
-    
-    
-
 </web-app>

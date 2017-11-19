@@ -14,9 +14,25 @@ public class MyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
         // Set response content type
         response.setContentType("text/html");
+        req.setAttribute("subscribed", true);
 
+
+        //TODO non null check login
         PrintWriter printWriter = response.getWriter();
         String docType = "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
+
+        if (req.getParameter("login").equals("") || req.getParameter("password").equals("")) {
+            response.sendRedirect("/login.html");
+            String someMessage = "Error !";
+            PrintWriter out = response.getWriter();
+            out.print("<html><head>");
+            out.print("<script type=\"text/javascript\">alert(" + someMessage + ");</script>");
+            out.print("</head><body></body></html>");
+//            printWriter.print("alert('Password expired, please update your password..');");
+
+        }
+
+
         if (req.getParameter("password").equals(correctPassword)) {
             printWriter.println(docType +
                     "<html>\n" +
@@ -24,7 +40,7 @@ public class MyServlet extends HttpServlet {
                     "<body bgcolor = \"#f0f0f0\">\n" +
                     "<h1 align = \"center\">" + "Hello" + "</h1>\n" +
                     "<ul>\n" +
-                    "  <li><b>USER</b>: "
+                    "<li><b>USER</b>: "
                     + req.getParameter("login") + "\n" +
                     "</ul>\n" +
                     "</body></html>"
