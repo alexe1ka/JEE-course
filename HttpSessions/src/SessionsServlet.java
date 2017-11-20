@@ -18,8 +18,10 @@ public class SessionsServlet extends HttpServlet {
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        boolean checkbox = req.getParameter("checkbox") != null;
         System.out.println(login);
         System.out.println(password);
+        System.out.println("checkbox state :" + checkbox);
 
         Map<String, String> userData = readFromFile();
 
@@ -33,26 +35,29 @@ public class SessionsServlet extends HttpServlet {
 //        }
 
         //с помощью cookie
-        Cookie cookie = null;
-        Cookie[] cookies = null;
-        cookies = req.getCookies();
-        if (cookies != null) {
-            for (int i = 0; i < cookies.length; i++) {
-                cookie = cookies[i];
-                if (cookie.getName().equals("login")) {
-                    login = cookie.getValue();
-                }
-                if (cookie.getName().equals("password")) {
-                    password = cookie.getValue();
-                }
 
-                System.out.println("Name : " + cookie.getName());
-                System.out.println("Value: " + cookie.getValue());
+        if (checkbox) {//TODO если с checkbox - то он отображает логин и пароль введенными
+            Cookie cookie = null;
+            Cookie[] cookies = null;
+            cookies = req.getCookies();
+            if (cookies != null) {
+                for (int i = 0; i < cookies.length; i++) {
+                    cookie = cookies[i];
+                    if (cookie.getName().equals("login")) {
+                        login = cookie.getValue();
+                    }
+                    if (cookie.getName().equals("password")) {
+                        password = cookie.getValue();
+                    }
+
+                    System.out.println("Name : " + cookie.getName());
+                    System.out.println("Value: " + cookie.getValue());
+                }
+                System.out.println("login in cookie checker:" + login);
+                System.out.println("password in cookie checker:" + password);
+            } else {
+                System.out.println("No cookies founds");
             }
-            System.out.println("login in cookie checker:" + login);
-            System.out.println("password in cookie checker:" + password);
-        } else {
-            System.out.println("No cookies founds");
         }
 
 
@@ -63,13 +68,14 @@ public class SessionsServlet extends HttpServlet {
         if (userData.containsKey(login)) {
             if (userData.containsValue(password)) {
 
-                Cookie loginCookie = new Cookie("login", login);
-                Cookie passwordCookie = new Cookie("password", password);
-                loginCookie.setMaxAge(60 * 60);
-                passwordCookie.setMaxAge(60 * 60);
-
-                resp.addCookie(loginCookie);
-                resp.addCookie(passwordCookie);
+                if (checkbox) {
+                    Cookie loginCookie = new Cookie("login", login);
+                    Cookie passwordCookie = new Cookie("password", password);
+                    loginCookie.setMaxAge(60 * 60);
+                    passwordCookie.setMaxAge(60 * 60);
+                    resp.addCookie(loginCookie);
+                    resp.addCookie(passwordCookie);
+                }
 
                 printWriter.println("<html>\n" +
                         "<head><title>" + "Successful!" + "</title></head>\n" +
