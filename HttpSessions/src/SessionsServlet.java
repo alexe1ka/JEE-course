@@ -48,10 +48,7 @@ public class SessionsServlet extends HttpServlet {
             }
         } else {
             resp.sendRedirect("create.html");
-
         }
-
-
     }
 
     @Override
@@ -62,13 +59,11 @@ public class SessionsServlet extends HttpServlet {
     private Map<String, String> readFromFile() {
         Map<String, String> map = new HashMap<String, String>();
         BufferedReader in = null;
-        FileReader fileReader = null;
         String line = "";
         ServletContext context = getServletConfig().getServletContext();
         String fullPath = context.getRealPath("users.txt");
         try {
             in = new BufferedReader(new FileReader(fullPath));
-
             while ((line = in.readLine()) != null) {
                 String parts[] = line.split("#");
                 map.put(parts[0], parts[1]);
